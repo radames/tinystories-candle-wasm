@@ -114,7 +114,7 @@ async function generateSequence({
     }
     function updateStatus(data) {
       if (data.status === "loading") {
-        contentEl.innerHTML = `<img src="imgs/loading.svg" />`;
+        contentEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-dasharray="15" stroke-dashoffset="15" stroke-linecap="round" stroke-width="2" d="M12 3a9 9 0 0 1 9 9"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>`;
       }
       if (data.status === "aborted") {
         contentEl.innerHTML = ``;
@@ -167,7 +167,6 @@ async function initWorkers() {
         .style("color", fontColor)
         .style("grid-row-start", `${i + 1}`)
         .classed("c-block ", true);
-
       containerEl.append(() => contentEl.node());
       return [contentEl.node(), await workerPool.getWorker()];
     })
