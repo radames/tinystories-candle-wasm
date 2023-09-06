@@ -12,50 +12,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400&family=Source+Sans+3:wght@100;200;300;400;500;600;700;800;900&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;400;500;700&family=Source+Sans+3:wght@200;400;500;600;700;800;900&display=swap");
       html,
       body {
         font-family: "Source Sans 3", sans-serif;
       }
-      code,
-      output,
-      select,
-      pre {
-        font-family: "Source Code Pro", monospace;
+      .mono {
+        font-family: "IBM Plex Mono", monospace;
       }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <style type="text/tailwindcss">
       .c-block {
         grid-column: 1;
-        @apply bg-slate-100 text-gray-500 px-4 py-6 rounded-2xl drop-shadow-[0_35px_35px_rgba(0,0,0,0.9)];
-        @apply min-h-[30em] sm:min-h-[15em] leading-relaxed cursor-pointer overflow-hidden row-span-6 sm:row-span-3;
+        @apply bg-slate-100 text-gray-500 px-5 py-6 rounded-2xl min-h-[30em] sm:min-h-[25em] leading-relaxed cursor-pointer overflow-hidden row-span-6;
+        font-family: "IBM Plex Mono", monospace;
+      }
+      .c-block span {
+        font-weight: 600;
       }
       .n-block {
         @apply text-xs w-[50px] text-center font-light px-1 py-1 border border-white rounded-md;
       }
+      .c-hover {
+        z-index: 100;
+        filter: drop-shadow(0 35px 35px rgba(0, 0, 0, 0.9));
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
+      }
     </style>
     <script type="module" src="./code.js"></script>
   </head>
-  <body class="container mx-auto max-w-3xl p-4 bg-[#020058]">
-    <img src="./cat.png" class="fixed top-0 left-0 w-20 -z-10" />
-    <h1 class="text-5xl font-bold text-white text-center">Tiny Stories</h1>
-    <h1 class="text-3xl font-bold text-white text-center">
-      <a
-        href="https://github.com/huggingface/candle"
-        target="_blank"
-        class="underline hover:no-underline"
-        >Candle</a
-      >
-      <a
-        href="https://github.com/karpathy/llama2.c"
-        target="_blank"
-        class="underline hover:no-underline"
-      >
-        Llama2.c</a
-      >
-    </h1>
-    <h2 class="text-2xl font-bold text-white text-center">Rust/WASM</h2>
+  <body class="container mx-auto max-w-2xl p-4 bg-[#020058]">
+    <img src="./imgs/cat.png" class="fixed top-0 left-0 w-20 -z-10" />
+    <header class="py-2 mb-6">
+      <h1 class="text-5xl font-bold text-white text-center">Tiny Stories</h1>
+      <h1 class="text-3xl text-white text-center mono">
+        <a
+          href="https://github.com/huggingface/candle"
+          target="_blank"
+          class="underline hover:no-underline"
+          >Candle
+        </a>
+        <a
+          href="https://github.com/karpathy/llama2.c"
+          target="_blank"
+          class="underline hover:no-underline"
+        >
+          Llama2.c
+        </a>
+      </h1>
+      <h2 class="text-2xl text-white text-center mono">Rust/WASM</h2>
+    </header>
     <form
       id="form"
       class="flex text-normal px-1 py-2 border-2 border-white rounded-md items-center"
@@ -92,26 +100,24 @@
         <input
           type="range"
           id="max-seq"
-          name="temperature"
           min="1"
           max="256"
           step="1"
-          value="200"
+          value="150"
           oninput="this.nextElementSibling.value = Number(this.value)"
         />
-        <output class="n-block"> 200</output>
+        <output class="n-block"> 150</output>
         <label class="text-sm font-medium" for="temperature">Temperature</label>
         <input
           type="range"
           id="temperature"
-          name="temperature"
           min="0"
           max="2"
           step="0.01"
-          value="0.50"
+          value="0.2"
           oninput="this.nextElementSibling.value = Number(this.value).toFixed(2)"
         />
-        <output class="n-block"> 0.50</output>
+        <output class="n-block">0.2</output>
 
         <label class="text-sm font-medium" for="repeat_penalty"
           >Repeat Penalty</label
@@ -119,7 +125,6 @@
         <input
           type="range"
           id="repeat-penalty"
-          name="repeat-penalty"
           min="-2"
           max="2"
           step="0.01"
@@ -129,6 +134,6 @@
         <output class="n-block">1.10</output>
       </div>
     </details>
-    <div class="text-base grid gap-2 py-5" id="container"></div>
+    <div class="text-base grid gap-3 py-5" id="container"></div>
   </body>
 </html>

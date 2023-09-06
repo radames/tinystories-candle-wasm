@@ -28,7 +28,6 @@ class WorkerPool {
     this._size = size;
   }
   init() {
-    console.log("init", this.size);
     for (let i = 0; i < this.size; i++) {
       this.workers.push({
         worker: new Worker("./llama2c.worker.js", { type: "module" }),
@@ -92,7 +91,12 @@ async function generateSequence({
   controller,
 }) {
   return new Promise((resolve, reject) => {
-    const seed = BigInt(Math.floor(Math.random() * 2 ** 64 - 1));
+    const seed = BigInt(
+      `0x${
+        Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(16) +
+        Date.now().toString(16)
+      }`
+    );
     worker.postMessage({
       weightsURL,
       modelID,
@@ -106,13 +110,18 @@ async function generateSequence({
     });
 
     function handleAbort() {
-      console.log("abort");
       worker.postMessage({ command: "abort" });
     }
     function updateStatus(data) {
+      if (data.status === "loading") {
+        contentEl.innerHTML = `<img src="imgs/loading.svg" />`;
+      }
+      if (data.status === "aborted") {
+        contentEl.innerHTML = ``;
+      }
       if (data.status === "generating") {
         const { message, prompt, sentence, tokensSec, totalTime } = data;
-        contentEl.innerHTML = `<span class="font-semibold">${prompt}</span>
+        contentEl.innerHTML = `<span>${prompt}</span>
         ${sentence.replace(/\<s\>|\<\/s\>/g, "")}`;
       }
     }
@@ -140,11 +149,15 @@ async function initWorkers() {
     workerPool.workers.map(async (_, i) => {
       const contentEl = d3.select(document.createElement("div"));
 
-      contentEl.on("pointerover pointerdown", (e) => {
-        d3.select(e.currentTarget).style("z-index", 100);
+      contentEl.on("pointerover", (e) => {
+        e.currentTarget.classList.add("c-hover");
       });
+      contentEl.on("pointerdown", (e) => {
+        e.currentTarget.classList.toggle("c-hover");
+      });
+
       contentEl.on("pointerout pointercancel pointerleave", (e) => {
-        d3.select(e.currentTarget).style("z-index", "unset");
+        e.currentTarget.classList.remove("c-hover");
       });
 
       const bgColor = colorPalette(i / workerPool.size);
@@ -216,17 +229,14 @@ async function run(containers, controller) {
 }
 
 initWorkers().then((containers) => {
-  const runBtn = d3.select(document.querySelector("#run"));
+  const runBtn = document.querySelector("#run");
   let runController = new AbortController();
   let isRunning = false;
   d3.select("#form").on("submit", async (e) => {
     e.preventDefault();
-
     if (isRunning) {
-      console.log("stop");
       stopRunning();
     } else {
-      console.log("start");
       startRunning();
       await run(containers, runController);
       stopRunning();
@@ -235,10 +245,10 @@ initWorkers().then((containers) => {
 
   function startRunning() {
     isRunning = true;
-    runBtn.text("Stop");
+    runBtn.innerText = "Stop";
   }
   function stopRunning() {
-    runBtn.text("Run");
+    runBtn.innerText = "Run";
     runController.abort();
     runController = new AbortController();
     isRunning = false;
