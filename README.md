@@ -1,6 +1,6 @@
 ---
-title: TinyStories Candle Magic
-emoji: 😻
+title: TinyStories Candle Wasm Magic
+emoji: 🕯️📖
 colorFrom: yellow
 colorTo: purple
 sdk: static
