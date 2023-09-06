@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <title>TinyStories - Candle Llama.c Rust/WASM</title>
+  </head>
+  <body></body>
+</html>
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400&family=Source+Sans+3:wght@100;200;300;400;500;600;700;800;900&display=swap");
+      html,
+      body {
+        font-family: "Source Sans 3", sans-serif;
+      }
+      code,
+      output,
+      select,
+      pre {
+        font-family: "Source Code Pro", monospace;
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+      .c-block {
+        grid-column: 1;
+        @apply bg-slate-100 text-gray-500 px-4 py-6 rounded-2xl drop-shadow-[0_35px_35px_rgba(0,0,0,0.9)];
+        @apply min-h-[30em] sm:min-h-[15em] leading-relaxed cursor-pointer overflow-hidden row-span-6 sm:row-span-3;
+      }
+      .n-block {
+        @apply text-xs w-[50px] text-center font-light px-1 py-1 border border-white rounded-md;
+      }
+    </style>
+    <script type="module" src="./code.js"></script>
+  </head>
+  <body class="container mx-auto max-w-3xl p-4 bg-[#020058]">
+    <img src="./cat.png" class="fixed top-0 left-0 w-20 -z-10" />
+    <h1 class="text-5xl font-bold text-white text-center">Tiny Stories</h1>
+    <h1 class="text-3xl font-bold text-white text-center">
+      <a
+        href="https://github.com/huggingface/candle"
+        target="_blank"
+        class="underline hover:no-underline"
+        >Candle</a
+      >
+      <a
+        href="https://github.com/karpathy/llama2.c"
+        target="_blank"
+        class="underline hover:no-underline"
+      >
+        Llama2.c</a
+      >
+    </h1>
+    <h2 class="text-2xl font-bold text-white text-center">Rust/WASM</h2>
+    <form
+      id="form"
+      class="flex text-normal px-1 py-2 border-2 border-white rounded-md items-center"
+    >
+      <input type="submit" hidden="" />
+      <input
+        type="text"
+        id="prompt"
+        class="w-full px-3 py-2 mx-1 resize-none outline-none bg-[#020058] text-white"
+        placeholder="Add your prompt here..."
+        value="Once upon a time"
+      />
+      <button
+        id="run"
+        class="bg-white hover:bg-gray-400 text-black font-normal py-2 w-20 rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
+      >
+        Create
+      </button>
+    </form>
+    <details class="text-white cursor-pointer">
+      <summary class="text-xs">Advanced:</summary>
+      <div class="grid grid-cols-3 max-w-md items-center gap-3 py-3">
+        <label for="model" class="text-sm">Models Options: </label>
+        <select
+          id="model"
+          class="border-2 border-white rounded-md font-light text-white bg-[#020058] px-1"
+        >
+          <option value="stories15M" selected>stories 15M (60.8 MB)</option>
+          <option value="stories42M">stories 42M (167 MB)</option>
+          <option value="stories110M">stories 110M (438 MB) WARNING</option>
+        </select>
+        <span></span>
+        <label class="text-sm font-medium" for="max-seq">Maximum length </label>
+        <input
+          type="range"
+          id="max-seq"
+          name="temperature"
+          min="1"
+          max="256"
+          step="1"
+          value="200"
+          oninput="this.nextElementSibling.value = Number(this.value)"
+        />
+        <output class="n-block"> 200</output>
+        <label class="text-sm font-medium" for="temperature">Temperature</label>
+        <input
+          type="range"
+          id="temperature"
+          name="temperature"
+          min="0"
+          max="2"
+          step="0.01"
+          value="0.50"
+          oninput="this.nextElementSibling.value = Number(this.value).toFixed(2)"
+        />
+        <output class="n-block"> 0.50</output>
+
+        <label class="text-sm font-medium" for="repeat_penalty"
+          >Repeat Penalty</label
+        >
+        <input
+          type="range"
+          id="repeat-penalty"
+          name="repeat-penalty"
+          min="-2"
+          max="2"
+          step="0.01"
+          value="1.10"
+          oninput="this.nextElementSibling.value = Number(this.value).toFixed(2)"
+        />
+        <output class="n-block">1.10</output>
+      </div>
+    </details>
+    <div class="text-base grid gap-2 py-5" id="container"></div>
+  </body>
+</html>
