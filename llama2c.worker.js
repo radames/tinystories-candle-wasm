@@ -9,7 +9,7 @@ async function fetchArrayBuffer(url) {
     return new Uint8Array(data);
   }
   const res = await fetch(url, { cache: "force-cache" });
-  await cache.put(url, res);
+  await cache.put(url, res.clone());
   return new Uint8Array(await res.arrayBuffer());
 }
 class Llama2C {
