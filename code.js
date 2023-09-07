@@ -183,8 +183,11 @@ async function fetchArrayBuffer(url) {
     return new Uint8Array(data);
   }
   const res = await fetch(url, { cache: "force-cache" });
-  await cache.put(url, res.clone());
-  return new Uint8Array(await res.arrayBuffer());
+  const resClone = res.clone();
+  const arrayBuffer = await res.arrayBuffer();
+
+  await cache.put(url, resClone);
+  return new Uint8Array(arrayBuffer);
 }
 
 async function run(containers, controller) {
