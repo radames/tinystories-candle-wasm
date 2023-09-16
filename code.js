@@ -128,9 +128,14 @@ async function generateSequence({
     const handleMessage = (event) => {
       const { status, error } = event.data;
       if (status) updateStatus(event.data);
-      if (error) reject(new Error(error));
+      if (error) {
+        workerPool.releaseWorker(worker);
+        worker.removeEventListener("message", handleMessage);
+        reject(new Error(error));
+      }
       if (status === "complete" || status === "aborted") {
         workerPool.releaseWorker(worker);
+        worker.removeEventListener("message", handleMessage);
         resolve(event.data);
       }
     };
