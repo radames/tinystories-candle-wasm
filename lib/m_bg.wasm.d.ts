@@ -4,7 +4,7 @@ export const memory: WebAssembly.Memory;
 export function __wbg_model_free(a: number): void;
 export function model_new(a: number, b: number, c: number, d: number, e: number): void;
 export function model_get_seq_len(a: number): number;
-export function model_init_with_prompt(a: number, b: number, c: number, d: number, e: number, f: number, g: number): void;
+export function model_init_with_prompt(a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number): void;
 export function model_next_token(a: number, b: number): void;
 export function main(a: number, b: number): number;
 export function __wbindgen_add_to_stack_pointer(a: number): number;

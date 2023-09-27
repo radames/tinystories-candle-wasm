@@ -87,6 +87,7 @@ async function generateSequence({
   maxSeqLen,
   temp,
   repeatPenalty,
+  top_p,
   contentEl,
   controller,
 }) {
@@ -104,6 +105,7 @@ async function generateSequence({
       prompt,
       temp,
       repeatPenalty,
+      top_p,
       seed: seed,
       maxSeqLen,
       command: "start",
@@ -201,6 +203,7 @@ async function run(containers, controller) {
   const maxSeqLen = document.querySelector("#max-seq");
   const temp = document.querySelector("#temperature");
   const repeatPenalty = document.querySelector("#repeat-penalty");
+  const topP = document.querySelector("#top-p");
   const modelID = document.querySelector("#model");
 
   const weightsURL = `${MODELS_BASE_URL}/${MODELS[getValue(modelID)].url}`;
@@ -223,6 +226,7 @@ async function run(containers, controller) {
         modelID: getValue(modelID),
         maxSeqLen: getValue(maxSeqLen),
         temp: getValue(temp),
+        top_p: getValue(topP),
         repeatPenalty: getValue(repeatPenalty),
         contentEl: container,
         controller,

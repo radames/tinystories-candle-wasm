@@ -16,11 +16,12 @@ export class Model {
 /**
 * @param {string} prompt
 * @param {number} temp
+* @param {number} top_p
 * @param {number} repeat_penalty
 * @param {bigint} seed
 * @returns {string}
 */
-  init_with_prompt(prompt: string, temp: number, repeat_penalty: number, seed: bigint): string;
+  init_with_prompt(prompt: string, temp: number, top_p: number, repeat_penalty: number, seed: bigint): string;
 /**
 * @returns {string}
 */
@@ -34,7 +35,7 @@ export interface InitOutput {
   readonly __wbg_model_free: (a: number) => void;
   readonly model_new: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly model_get_seq_len: (a: number) => number;
-  readonly model_init_with_prompt: (a: number, b: number, c: number, d: number, e: number, f: number, g: number) => void;
+  readonly model_init_with_prompt: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
   readonly model_next_token: (a: number, b: number) => void;
   readonly main: (a: number, b: number) => number;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;

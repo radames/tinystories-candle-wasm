@@ -3,20 +3,23 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
     <title>TinyStories - Candle Llama.c Rust/WASM</title>
   </head>
+
   <body></body>
 </html>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;400;500;700&family=Source+Sans+3:wght@200;400;500;600;700;800;900&display=swap");
+
       html,
       body {
         font-family: "Source Sans 3", sans-serif;
       }
+
       .mono {
         font-family: "IBM Plex Mono", monospace;
       }
@@ -44,6 +47,7 @@
     </style>
     <script type="module" src="./code.js"></script>
   </head>
+
   <body class="container mx-auto max-w-2xl p-4 bg-[#020058]">
     <img src="./imgs/cat.png" class="fixed top-0 left-0 w-20 -z-10" />
     <header class="py-2 mb-6">
@@ -66,20 +70,17 @@
     </header>
     <form
       id="form"
-      class="flex text-normal px-1 py-2 border-2 border-white rounded-md items-center"
-    >
+      class="flex text-normal px-1 py-2 border-2 border-white rounded-md items-center">
       <input type="submit" hidden="" />
       <input
         type="text"
         id="prompt"
         class="w-full px-3 py-2 mx-1 resize-none outline-none bg-[#020058] text-white"
         placeholder="Add your prompt here..."
-        value="Once upon a time"
-      />
+        value="Once upon a time" />
       <button
         id="run"
-        class="bg-white hover:bg-gray-400 text-black font-normal py-2 w-20 rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
-      >
+        class="bg-white hover:bg-gray-400 text-black font-normal py-2 w-20 rounded disabled:bg-gray-300 disabled:cursor-not-allowed">
         Create
       </button>
     </form>
@@ -89,8 +90,7 @@
         <label for="model" class="text-sm">Models Options: </label>
         <select
           id="model"
-          class="border-2 border-white rounded-md font-light text-white bg-[#020058] px-1"
-        >
+          class="border-2 border-white rounded-md font-light text-white bg-[#020058] px-1">
           <option value="stories15M" selected>stories 15M (60.8 MB)</option>
           <option value="stories42M">stories 42M (167 MB)</option>
           <option value="stories110M">stories 110M (438 MB) WARNING</option>
@@ -104,8 +104,7 @@
           max="256"
           step="1"
           value="150"
-          oninput="this.nextElementSibling.value = Number(this.value)"
-        />
+          oninput="this.nextElementSibling.value = Number(this.value)" />
         <output class="n-block"> 150</output>
         <label class="text-sm font-medium" for="temperature">Temperature</label>
         <input
@@ -115,23 +114,33 @@
           max="2"
           step="0.01"
           value="0.2"
-          oninput="this.nextElementSibling.value = Number(this.value).toFixed(2)"
-        />
+          oninput="this.nextElementSibling.value = Number(this.value).toFixed(2)" />
         <output class="n-block">0.2</output>
 
         <label class="text-sm font-medium" for="repeat_penalty"
           >Repeat Penalty</label
         >
+
         <input
           type="range"
           id="repeat-penalty"
-          min="-2"
+          min="1"
           max="2"
           step="0.01"
           value="1.10"
-          oninput="this.nextElementSibling.value = Number(this.value).toFixed(2)"
-        />
+          oninput="this.nextElementSibling.value = Number(this.value).toFixed(2)" />
         <output class="n-block">1.10</output>
+
+        <label class="text-sm font-medium" for="top-p">Top P</label>
+        <input
+          type="range"
+          id="top-p"
+          min="0"
+          max="1"
+          step="0.01"
+          value="1.00"
+          oninput="this.nextElementSibling.value = Number(this.value).toFixed(2)" />
+        <output class="n-block">1.00</output>
       </div>
     </details>
     <div class="text-base grid gap-3 py-5" id="container"></div>
